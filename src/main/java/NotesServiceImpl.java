@@ -1,4 +1,5 @@
 import java.util.Collection;
+import com.google.common.base.Preconditions;
 
 public class NotesServiceImpl implements NotesService {
 
@@ -13,12 +14,20 @@ public class NotesServiceImpl implements NotesService {
 
     @Override
     public float averageOf(String name) {
-        float sum = 0.0f;
-        final Collection<Note> notes = storageService.getAllNotesOf(name);
-        for (final Note note : notes) {
-            sum += note.getNote();
-        }
+        Preconditions.checkArgument(name != null, "Imię ucznia nie może być null");
+        Preconditions.checkArgument(!name.trim().isEmpty(), "Imię ucznia nie może być puste");
+        try {
+            float sum = 0.0f;
+            final Collection<Note> notes = storageService.getAllNotesOf(name);
+            for (final Note note : notes) {
+                sum += note.getNote();
+            }
+
         return sum / notes.size();
+        }catch (NullPointerException e) {
+            throw new IllegalArgumentException("Nie ma ocen ucznia: "+name);
+        }
+
     }
 
     @Override
