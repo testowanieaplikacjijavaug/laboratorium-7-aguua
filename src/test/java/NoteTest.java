@@ -38,10 +38,15 @@ public class NoteTest {
     }
 
     @Test
-    public void testInvalidNote(){
+    public void testNoteUnderExpected(){
         assertThatThrownBy(() -> {
             Note newNone = Note.of ("Adam", 1);
         }).isInstanceOf(IllegalArgumentException.class).hasMessage("Niewłaściwa ocena");
-
+    }
+    @Test
+    public void testNoteAboveExpected(){
+        assertThatThrownBy(() -> {
+            Note newNone = Note.of ("Adam", 8);
+        }).isInstanceOf(IllegalArgumentException.class).hasMessage("Niewłaściwa ocena");
     }
 }

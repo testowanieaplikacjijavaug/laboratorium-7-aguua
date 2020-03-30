@@ -26,3 +26,5 @@ jobs:
         run: gradle build
       - name: Build with Jacoco Report
         run: gradle build jacocoTestReport
+      - name: Codecov
+        uses: codecov/codecov-action@v1.0.6
